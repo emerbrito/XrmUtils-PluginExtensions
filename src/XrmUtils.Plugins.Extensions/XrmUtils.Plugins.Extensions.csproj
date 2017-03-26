@@ -78,6 +78,8 @@
     <Compile Include="Plugins\IInternalServices.cs" />
     <Compile Include="Plugins\IPluginInternals.cs" />
     <Compile Include="Plugins\ITraceServiceFactory.cs" />
+    <Compile Include="Plugins\IWorkflowInternals.cs" />
+    <Compile Include="Plugins\LocalWorkflowContext.cs" />
     <Compile Include="Plugins\MessageAttribute.cs" />
     <Compile Include="Plugins\PluginAttributesCollection.cs" />
     <Compile Include="Plugins\PluginBase.cs" />
@@ -90,6 +92,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Messages.resx</DependentUpon>
     </Compile>
+    <Compile Include="Plugins\WorkflowActivityBase.cs" />
+    <Compile Include="Plugins\WorkflowInternals.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
