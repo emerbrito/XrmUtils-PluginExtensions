@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/10/nuspec.xsd">
+    <metadata>
+        <id>XrmUtils.CrmSdk.PluginExtensions</id>
+        <version>1.0.1.0</version>
+        <title>Base classes for Dynamics 365 plugin and workflow activities development.</title>
+        <authors>Emerson Brito</authors>
+        <owners>Emerson Brito</owners>
+        <licenseUrl>https://github.com/emerbrito/XrmUtils-PluginExtensions/blob/master/LICENSE</licenseUrl>
+        <projectUrl>https://github.com/emerbrito/XrmUtils-PluginExtensions</projectUrl>
+        <requireLicenseAcceptance>true</requireLicenseAcceptance>
+        <description>Base classes for Dynamics 365 plugins and workflows. Wraps the boilerplate code and offers a series of extension methods to streamline plugin and custom workflow activities development. </description>
+        <summary>Base classes for Dynamics 365 plugin and workflow activities development.</summary>
+        <copyright>Emerson Brito (c) 2016</copyright>
+        <tags>dynamics crm 365 sdk xrm extensions</tags>
+    </metadata>
+    <files>
+        <file src="..\src\XrmUtils.Plugins.Extensions\bin\Release\XrmUtils.Plugins.Extensions.dll" target="lib\net452\XrmUtils.Plugins.Extensions.dll" />
+      <file src="..\src\XrmUtils.Plugins.Extensions\bin\Release\XrmUtils.Plugins.Extensions.pdb" target="lib\net452\XrmUtils.Extensions.pdb" />
+      <file src="..\src\XrmUtils.Plugins.Extensions\bin\Release\XrmUtils.Plugins.Extensions.xml" target="lib\net452\XrmUtils.Extensions.xml" />
+    </files>
+</package>
