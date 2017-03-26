@@ -2,6 +2,7 @@ Dynamics 365 Plugin Extensions
 ==============================
 
 [![Build status](https://ci.appveyor.com/api/projects/status/2tmf1yi6ioi93n0h?svg=true)](https://ci.appveyor.com/project/emerbrito/xrmutils-pluginextensions)
+[![NuGet](https://img.shields.io/nuget/v/XrmUtils.CrmSdk.PluginExtensions.svg)](http://www.nuget.org/packages/XrmUtils.CrmSdk.PluginExtensions)
 
 Base class classes for Dynamics 365 plugins and workflows. Wraps the boilerplate code and offers a series of extension methods to streamline plugin and custom workflow activities development.
 
