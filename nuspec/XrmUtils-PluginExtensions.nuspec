@@ -13,6 +13,9 @@
         <summary>Base classes for Dynamics 365 plugin and workflow activities development.</summary>
         <copyright>Emerson Brito (c) 2016</copyright>
         <tags>dynamics crm 365 sdk xrm extensions</tags>
+      <dependencies>
+        <dependency id="XrmUtils.CrmSdk.Extensions" version="1.0.1" />
+      </dependencies>      
     </metadata>
     <files>
         <file src="..\src\XrmUtils.Plugins.Extensions\bin\Release\XrmUtils.Plugins.Extensions.dll" target="lib\net452\XrmUtils.Plugins.Extensions.dll" />
