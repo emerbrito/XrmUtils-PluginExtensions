@@ -4,7 +4,7 @@ Dynamics 365 Plugin Extensions
 [![Build status](https://ci.appveyor.com/api/projects/status/2tmf1yi6ioi93n0h?svg=true)](https://ci.appveyor.com/project/emerbrito/xrmutils-pluginextensions)
 [![NuGet](https://img.shields.io/nuget/v/XrmUtils.CrmSdk.PluginExtensions.svg)](http://www.nuget.org/packages/XrmUtils.CrmSdk.PluginExtensions)
 
-Base class classes for Dynamics 365 plugins and workflows. Wraps the boilerplate code and offers a series of extension methods to streamline plugin and custom workflow activities development.
+Base classes for Dynamics 365 plugins and workflows. Wraps boilerplate code and offers a series of extension methods to streamline plugin and custom activities development.
 
 Get it from Nuget:
 ```
@@ -15,16 +15,16 @@ Documentation
 ----------------
 
 Documentation will be provide soon.
-Bellow are a summary of the most common functionality.
+Bellow is a summary commonly used functionality.
 
 Plugin Base Class
 -----------------
 
 When creating a plugin, inherit from `PluginBase` instead of implementing the `IPlugin` interface from the SDK.
 
-In this example, the plugin class is decorated with a series of attributes that not only self-documents the plugin registration but are also be used at runtime to validate the registration. If registration doesn't match the attributes, an `InvalidPluginExecutionException` will be thrown before the `Execute` method is reached.
+In this example, the plugin class is decorated with a series of attributes that not only self-documents the plugin registration but are used at runtime to validate the registration. If registration is different than expected, an `InvalidPluginExecutionException` will be thrown before the `Execute` method is reached.
 
-The `LocalPluginContext` passed as an argument to the `Execute` method has all the services you would normally use in a plugin(such as `ITracingService` and `IOrganizationService`).
+The `LocalPluginContext` passed as an argument to the `Execute` method has all the services you would normally use in a plugin (such as `ITracingService` and `IOrganizationService`).
 
 ```csharp
     using XrmUtils.Extensions;
@@ -65,7 +65,7 @@ A fully implemented plugin, note the `Execute`method only has the necessary busi
                 localContext.Trace("Credit limit has changed. Creating audit log.");
 
                 oldLimit = new Entity("creditlimittracking");
-                oldLimit.AddOrUpdateAttribute("limit", image.GetAliasedAttributeValue<Money>("creditlimit"));
+                oldLimit.AddOrUpdateAttribute("limit", image.GetAttributeValue<Money>("creditlimit"));
 
                 localContext.Trace("Creating new record.");
                 localContext.OrganizationService.Create(oldLimit);
@@ -83,8 +83,10 @@ A fully implemented plugin, note the `Execute`method only has the necessary busi
 ### Injecting your own Tracing Service
 
 In the above examples, all calls to `localContext.Trace` are routed to the default instance of Dynamics 365 `ITracingService`.
-It is possible to override the default behavior, for example to also save trace information to a custom entity.
-To do so override the base class method `CreateTracingService`. This method received the original tracing service which you can use to initialize your custom implementation if required.
+There may be an instance where you want to wrap the tracing service so you can le's say, dump additional information on a custom entity.
+
+You can inject yout own service by overriding the base class method `CreateTracingService`.
+This method received the original tracing service which you can use to initialize your custom implementation if required.
 
 ```csharp
     public class TrackCreditLimit : PluginBase
@@ -105,7 +107,30 @@ To do so override the base class method `CreateTracingService`. This method rece
 Workflow Activity Base Class
 ----------------------------
 
-Documentation will be updated soon.
+When creating a custom workflow activity, inherit from `WorkflowActivityBase` instead of `CodeActivity`.
+
+The `LocalWorkflowContext` passed as an argument to the `Execute` method has all the services you would normally use in a custom activity (such as `ITracingService` and `IOrganizationService`).
+
+```csharp
+    using XrmUtils.Extensions.Plugins;
+
+    class MyCustomActivity : WorkflowActivityBase
+    {
+        [Input("Full name")]
+        public InArgument<string> FullName { get; set; }
+
+        [Output("Result")]
+        public OutArgument<string> Result { get; set; }
+
+        protected override void Execute(LocalWorkflowContext localContext)
+        {
+            var name = FullName.Get(localContext.ExecutionContext);
+            var greetings = $"Hello {name}!";
+
+            Result.Set(localContext.ExecutionContext, greetings);
+        }
+    }
+```
 
 License
 --------
