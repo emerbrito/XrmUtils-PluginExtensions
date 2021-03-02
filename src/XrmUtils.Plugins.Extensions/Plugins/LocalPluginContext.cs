@@ -117,7 +117,7 @@ namespace XrmUtils.Extensions.Plugins
         /// <summary>
         /// Retrieves an input parameter. Input parameters are usually passed as arguments to custom actions.
         /// </summary>
-        /// <typeparam name="TResult">The value of the parameter of default if empty.</typeparam>
+        /// <typeparam name="TResult">The input parameter's type.</typeparam>
         /// <param name="paramName">The parameter name.</param>
         /// <returns></returns>
         public TResult GetInputParameter<TResult>(string paramName)
@@ -128,7 +128,7 @@ namespace XrmUtils.Extensions.Plugins
         /// <summary>
         /// Retrieves an input parameter. Input parameters are usually passed as arguments to custom actions.
         /// </summary>
-        /// <typeparam name="TResult">The value of the parameter of default if empty.</typeparam>
+        /// <typeparam name="TResult">The input parameter's type.</typeparam>
         /// <param name="paramName">The parameter name.</param>
         /// <param name="defaultValue">Default value if parameter is not found..</param>
         /// <returns></returns>
@@ -151,6 +151,26 @@ namespace XrmUtils.Extensions.Plugins
 
             return (TResult)value;
 
+        }
+
+        /// <summary>
+        /// Retrieves a shared variable from the execution context.
+        /// </summary>
+        /// <typeparam name="TResult">The shared variable type.</typeparam>
+        /// <param name="key">The key.</param>
+        /// <param name="recursive">Whether the search should be recursive through nested execution contexts.</param>
+        /// <returns></returns>
+        public TResult GetSharedVariable<TResult>(string key, bool recursive)
+        {
+
+            if (recursive)
+            {
+                return GetSharedVariableRecursiveInternal<TResult>(key);
+            }
+            else
+            {
+                return GetSharedVariableInternal<TResult>(key);
+            }
         }
 
         /// <summary>
