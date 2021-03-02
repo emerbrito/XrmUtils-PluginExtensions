@@ -115,6 +115,45 @@ namespace XrmUtils.Extensions.Plugins
         }
 
         /// <summary>
+        /// Retrieves an input parameter. Input parameters are usually passed as arguments to custom actions.
+        /// </summary>
+        /// <typeparam name="TResult">The value of the parameter of default if empty.</typeparam>
+        /// <param name="paramName">The parameter name.</param>
+        /// <returns></returns>
+        public TResult GetInputParameter<TResult>(string paramName)
+        {
+            return GetInputParameter<TResult>(paramName, default(TResult));
+        }
+
+        /// <summary>
+        /// Retrieves an input parameter. Input parameters are usually passed as arguments to custom actions.
+        /// </summary>
+        /// <typeparam name="TResult">The value of the parameter of default if empty.</typeparam>
+        /// <param name="paramName">The parameter name.</param>
+        /// <param name="defaultValue">Default value if parameter is not found..</param>
+        /// <returns></returns>
+        public TResult GetInputParameter<TResult>(string paramName, TResult defaultValue)
+        {
+
+            if (!PluginExecutionContext.InputParameters.ContainsKey(paramName))
+            {
+                return defaultValue;
+            }
+
+            var value = PluginExecutionContext.InputParameters[paramName];
+
+            // use ReferenceEquals to ensure 
+            // it won't error when checking value types agains null 
+            if (ReferenceEquals(value, null))
+            {
+                return defaultValue;
+            }
+
+            return (TResult)value;
+
+        }
+
+        /// <summary>
         /// Validates the plugin registration against expected values found on attributes added to the plugin class.
         /// Throws an <see cref="InvalidPluginExecutionException"/> if validation fails.
         /// </summary>
@@ -148,6 +187,56 @@ namespace XrmUtils.Extensions.Plugins
 
         }
 
+        #endregion
+
+        #region Private Methods
+        TResult GetSharedVariableInternal<TResult>(string key)
+        {
+
+            if (!PluginExecutionContext.SharedVariables.ContainsKey(key))
+            {
+                return default(TResult);
+            }
+
+            var value = PluginExecutionContext.SharedVariables[key];
+
+            if (value is TResult)
+            {
+                return (TResult)value;
+            }
+            else
+            {
+                throw new InvalidPluginExecutionException($"Unable to cast shared variable '{key}' to {typeof(TResult).Name}");
+            }
+        }
+
+        TResult GetSharedVariableRecursiveInternal<TResult>(string key)
+        {
+
+            var context = PluginExecutionContext;
+
+            while (context != null)
+            {
+
+                if (context.SharedVariables.ContainsKey(key))
+                {
+
+                    var value = context.SharedVariables[key];
+                    if (value is TResult)
+                    {
+                        return (TResult)value;
+                    }
+                    else
+                    {
+                        throw new InvalidPluginExecutionException($"Unable to cast shared variable '{key}' to {typeof(TResult).Name}");
+                    }
+                }
+
+                context = context.ParentContext;
+            }
+
+            return default(TResult);
+        }
         #endregion
 
     }
