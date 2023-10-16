@@ -37,6 +37,14 @@ namespace XrmUtils.Extensions.Plugins
         public IOrganizationService OrganizationService { get; private set; }
 
         /// <summary>
+        /// Gets an elevated IOrganizationService with SYSTEM user permissions.
+        /// </summary>
+        /// <value>
+        /// The IOrganizationService.
+        /// </value>
+        public IOrganizationService SystemOrganizationService { get; private set; }
+
+        /// <summary>
         /// Synchronous registered plug-ins can post the execution context to the Microsoft Azure Service Bus. <br/> 
         /// It is through this notification service that synchronous plug-ins can send brokered messages to the Microsoft Azure Service Bus.
         /// </summary>
@@ -88,6 +96,9 @@ namespace XrmUtils.Extensions.Plugins
 
             TracingService.Trace("Obtaining organization service reference.");
             OrganizationService = serviceFactory.CreateOrganizationService(ExecutionContext.UserId);
+
+            TracingService.Trace("Obtaining elevated organization service reference.");
+            SystemOrganizationService = serviceFactory.CreateOrganizationService(null);
 
             NotificationService = (IServiceEndpointNotificationService)serviceProvider.GetService(typeof(IServiceEndpointNotificationService));
 

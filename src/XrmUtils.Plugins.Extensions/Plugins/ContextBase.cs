@@ -38,6 +38,14 @@ namespace XrmUtils.Extensions.Plugins
         public IOrganizationService OrganizationService { get; internal set; }
 
         /// <summary>
+        /// Gets the inner SYSTEM organization service.
+        /// </summary>
+        /// <value>
+        /// The organization service.
+        /// </value>
+        public IOrganizationService SystemOrganizationService { get; internal set; }
+
+        /// <summary>
         /// Gets the inner tracing service.
         /// </summary>
         /// <value>
@@ -143,6 +151,7 @@ namespace XrmUtils.Extensions.Plugins
 
             InnerExecutionContext = internals.InnerExecutionContext;
             OrganizationService = internals.OrganizationService;
+            SystemOrganizationService = internals.OrganizationService;
 
             TracingService = internals.TracingService;
 
