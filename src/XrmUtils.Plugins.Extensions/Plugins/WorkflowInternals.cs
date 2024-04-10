@@ -18,6 +18,8 @@ namespace XrmUtils.Extensions.Plugins
 
         public IOrganizationService OrganizationService { get; internal set; }
 
+        public IOrganizationService SystemOrganizationService { get; private set; }
+
         public ITracingService TracingService { get; internal set; }
 
         public IExecutionContext InnerExecutionContext { get { return WorkflowContext; } }
@@ -71,6 +73,7 @@ namespace XrmUtils.Extensions.Plugins
 
             IOrganizationServiceFactory serviceFactory = executionContext.GetExtension<IOrganizationServiceFactory>();
             OrganizationService = serviceFactory.CreateOrganizationService(WorkflowContext.UserId);
+            SystemOrganizationService = serviceFactory.CreateOrganizationService(null);
 
         }
 

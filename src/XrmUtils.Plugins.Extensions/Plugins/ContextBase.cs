@@ -151,7 +151,7 @@ namespace XrmUtils.Extensions.Plugins
 
             InnerExecutionContext = internals.InnerExecutionContext;
             OrganizationService = internals.OrganizationService;
-            SystemOrganizationService = internals.OrganizationService;
+            SystemOrganizationService = internals.SystemOrganizationService;
 
             TracingService = internals.TracingService;
 

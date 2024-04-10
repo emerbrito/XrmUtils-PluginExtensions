@@ -12,6 +12,8 @@ namespace XrmUtils.Extensions.Plugins
 
         IOrganizationService OrganizationService { get; }
 
+        IOrganizationService SystemOrganizationService { get; }
+
         ITracingService TracingService { get; }
 
         IExecutionContext InnerExecutionContext { get; }
